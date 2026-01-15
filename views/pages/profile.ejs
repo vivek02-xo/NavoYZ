@@ -1,0 +1,172 @@
+<% layout("layouts/boilerplate") %>
+
+<style>
+/* ===== PROFILE PAGE ===== */
+.profile-page {
+  min-height: 100vh;
+  padding: 8rem 8% 6rem;
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+}
+
+/* CARD */
+.profile-card {
+  max-width: 900px;
+  margin: auto;
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 3.5rem 4rem;
+  box-shadow: 0 40px 100px rgba(0,0,0,0.08);
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 3.5rem;
+}
+
+/* LEFT */
+.profile-left {
+  text-align: center;
+}
+
+.profile-avatar {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+}
+
+.profile-name {
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+}
+
+.profile-username {
+  font-size: 0.95rem;
+  color: #64748b;
+}
+
+/* RIGHT */
+.profile-right h2 {
+  font-family: "Playfair Display", serif;
+  font-size: 2.2rem;
+  margin-bottom: 2rem;
+}
+
+.profile-info {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+}
+
+.profile-field span {
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #64748b;
+}
+
+.profile-field p {
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: #020617;
+}
+
+/* BIO */
+.profile-bio {
+  margin-top: 2.5rem;
+}
+
+.profile-bio p {
+  color: #475569;
+  line-height: 1.7;
+}
+
+/* ACTIONS */
+.profile-actions {
+  margin-top: 3rem;
+  display: flex;
+  gap: 1.2rem;
+  flex-wrap: wrap;
+}
+
+.profile-actions a,
+.profile-actions button {
+  padding: 0.7rem 1.6rem;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn-edit {
+  background: #020617;
+  color: #fff;
+}
+
+.btn-orders {
+  background: #f1f5f9;
+  color: #020617;
+}
+
+.btn-logout {
+  background: #fee2e2;
+  color: #991b1b;
+}
+</style>
+
+<div class="profile-page">
+  <div class="profile-card reveal">
+
+    <!-- LEFT -->
+    <div class="profile-left">
+      <img src="<%= user.profileImage.url %>" class="profile-avatar" />
+      <div class="profile-name"><%= user.name %></div>
+      <div class="profile-username">@<%= user.username %></div>
+    </div>
+
+    <!-- RIGHT -->
+    <div class="profile-right">
+      <h2>Your Profile</h2>
+
+      <div class="profile-info">
+        <div class="profile-field">
+          <span>Email</span>
+          <p><%= user.email %></p>
+        </div>
+
+        <div class="profile-field">
+          <span>Phone</span>
+          <p><%= user.phone || "Not provided" %></p>
+        </div>
+
+        <div class="profile-field">
+          <span>Joined</span>
+          <p><%= user.createdAt.toDateString() %></p>
+        </div>
+
+        <div class="profile-field">
+          <span>Role</span>
+          <p><%= user.role %></p>
+        </div>
+      </div>
+
+      <div class="profile-bio">
+        <span>Bio</span>
+        <p><%= user.bio || "You haven’t added a bio yet." %></p>
+      </div>
+
+      <!-- ACTIONS -->
+      <div class="profile-actions">
+        <a href="/profile/edit" class="btn-edit">Edit Profile</a>
+        <a href="/orders/my" class="btn-orders">My Orders</a>
+        <form action="/logout" method="POST">
+          <button class="btn-logout">Logout</button>
+        </form>
+      </div>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,343 @@
+<% layout("layouts/boilerplate") %>
+
+<style>
+/* ===== SHARED FRAME STYLE ===== */
+.service-page {
+  width: 100%;
+}
+
+/* ===== HERO ===== */
+.service-hero {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 8%;
+  padding-top: 5rem;
+  background: linear-gradient(180deg, #ffffff 0%, #f7f7f7 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.service-hero h1 {
+  font-family: "Playfair Display", serif;
+  font-size: 3rem;
+  margin-bottom: 1.5rem;
+}
+
+.service-hero p {
+  max-width: 720px;
+  font-size: 1.15rem;
+  color: #555;
+}
+
+/* ===== SECTION ===== */
+.service-section {
+  padding: 7rem 8%;
+  background: #ffffff;
+}
+
+.service-section.alt {
+  background: radial-gradient(circle at top left, #ffffff, #f2f4f7);
+}
+
+.service-section h2 {
+  font-family: "Playfair Display", serif;
+  font-size: 2.6rem;
+  margin-bottom: 1.2rem;
+}
+
+.service-section p {
+  max-width: 760px;
+  font-size: 1.1rem;
+  color: #555;
+  line-height: 1.7;
+}
+
+/* ===== LIST ===== */
+.service-list {
+  margin-top: 2.5rem;
+}
+
+.service-list li {
+  padding: 0.8rem 0;
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+  font-size: 1.05rem;
+}
+
+/* ===== PROCESS ===== */
+.process {
+  max-width: 900px;
+}
+
+.process-step {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.process-step span {
+  font-size: 0.9rem;
+  color: #64748b;
+}
+
+.process-step strong {
+  display: block;
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+/* ===== PRICING ===== */
+.pricing-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 1.4rem 0;
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+}
+
+.pricing-row strong {
+  font-size: 1.6rem;
+}
+
+/* ===== FAQ ===== */
+details {
+  max-width: 800px;
+  padding: 1.4rem 0;
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+}
+
+/* ===== CTA FRAME ===== */
+.service-cta {
+  height: 100vh;
+  background: linear-gradient(180deg, #ffffff, #f8fafc);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.service-cta h2 {
+  font-family: "Playfair Display", serif;
+  font-size: 3rem;
+  margin-bottom: 1.2rem;
+}
+
+.service-cta p {
+  font-size: 1.15rem;
+  color: #475569;
+  margin-bottom: 2.8rem;
+}
+
+.btn-cta {
+  display: inline-flex;
+  padding: 1.1rem 2.8rem;
+  border-radius: 999px;
+  background: #020617;
+  color: white;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+/* ===== REVIEWS ===== */
+.reviews-wrap {
+  max-width: 900px;
+  margin-top: 3.5rem;
+}
+
+.review-form {
+  margin-bottom: 4rem;
+}
+
+.review-form textarea {
+  width: 100%;
+  min-height: 120px;
+  padding: 1rem;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  font-size: 1rem;
+  margin-top: 1rem;
+}
+
+.review-form select {
+  padding: 0.5rem 0.8rem;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+}
+
+.review-form button {
+  margin-top: 1.2rem;
+  background: #020617;
+  color: white;
+  padding: 0.7rem 1.6rem;
+  border-radius: 999px;
+  border: none;
+  font-weight: 600;
+}
+
+.review {
+  padding: 2rem 0;
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+}
+
+.review-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.6rem;
+}
+
+.review-user {
+  font-weight: 600;
+}
+
+.review-rating {
+  font-size: 0.95rem;
+  color: #64748b;
+}
+
+.review-delete {
+  margin-top: 0.8rem;
+  background: none;
+  border: none;
+  color: #ef4444;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+</style>
+
+<div class="service-page">
+
+<!-- HERO -->
+<section class="service-hero">
+  <div class="reveal hero-exit">
+    <h1><%= service.title %></h1>
+    <p><%= service.shortDescription %></p>
+  </div>
+</section>
+
+<!-- OVERVIEW -->
+<section class="service-section reveal">
+  <h2>Overview</h2>
+  <p><%= service.longDescription %></p>
+</section>
+
+<!-- WHAT YOU GET -->
+<section class="service-section alt reveal">
+  <h2>What you get</h2>
+  <ul class="service-list">
+    <% service.whatYouGet.forEach(i => { %>
+      <li><%= i %></li>
+    <% }) %>
+  </ul>
+</section>
+
+<!-- PROCESS -->
+<% if(service.process?.length){ %>
+<section class="service-section reveal">
+  <h2>How we work</h2>
+  <div class="process">
+    <% service.process.forEach(p => { %>
+      <div class="process-step">
+        <span>Step <%= p.step %></span>
+        <div>
+          <strong><%= p.title %></strong>
+          <p><%= p.description %></p>
+        </div>
+      </div>
+    <% }) %>
+  </div>
+</section>
+<% } %>
+
+<!-- PRICING -->
+<section class="service-section alt reveal">
+  <h2>Pricing</h2>
+  <% service.pricing.forEach(p => { %>
+    <div class="pricing-row">
+      <span><%= p.label || "Project" %></span>
+      <strong>₹<%= p.minPrice %> – ₹<%= p.maxPrice %></strong>
+    </div>
+  <% }) %>
+</section>
+
+<!-- FAQ -->
+<% if(service.faqs?.length){ %>
+<section class="service-section reveal">
+  <h2>FAQs</h2>
+  <% service.faqs.forEach(f => { %>
+    <details>
+      <summary><%= f.question %></summary>
+      <p><%= f.answer %></p>
+    </details>
+  <% }) %>
+</section>
+<% } %>
+
+<!-- REVIEWS -->
+<section class="service-section reveal">
+  <h2>Client Reviews</h2>
+
+  <div class="reviews-wrap">
+
+    <% if(currentUser){ %>
+    <form class="review-form"
+          action="/services/<%= service.slug %>/reviews"
+          method="POST">
+
+      <select name="review[rating]" required>
+        <option value="">Rating</option>
+        <% for(let i=1;i<=5;i++){ %>
+          <option value="<%= i %>"><%= i %> ★</option>
+        <% } %>
+      </select>
+
+      <textarea
+        name="review[comment]"
+        placeholder="Share your experience..."
+        required></textarea>
+
+      <button>Add Review</button>
+    </form>
+    <% } %>
+
+    <% if(service.reviews.length === 0){ %>
+      <p style="color:#64748b;">No reviews yet. Be the first.</p>
+    <% } %>
+
+    <% service.reviews.forEach(r => { %>
+      <div class="review">
+        <div class="review-head">
+          <span class="review-user"><%= r.author.username %></span>
+          <span class="review-rating">★ <%= r.rating %>/5</span>
+        </div>
+
+        <p><%= r.comment %></p>
+
+        <% if(
+          currentUser &&
+          (r.author._id.equals(currentUser._id) || currentUser.role === "admin")
+        ){ %>
+          <form
+            method="POST"
+            action="/services/<%= service.slug %>/reviews/<%= r._id %>?_method=DELETE">
+            <button class="review-delete">Delete</button>
+          </form>
+        <% } %>
+      </div>
+    <% }) %>
+
+  </div>
+</section>
+
+
+<!-- CTA -->
+<section class="service-cta">
+  <div class="reveal cta-exit">
+    <h2>Let’s build this properly.</h2>
+    <p>Timeline: <%= service.estimatedTimeline || "Defined after discussion" %></p>
+    <a href="/services/<%= service.slug %>/order" class="btn-cta">Start this project →</a>
+
+  </div>
+</section>
+
+</div>

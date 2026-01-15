@@ -1,0 +1,158 @@
+<% layout("layouts/boilerplate") %>
+
+<style>
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6rem 8%;
+  background: linear-gradient(180deg, #ffffff, #f8fafc);
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 460px;
+  background: #fff;
+  padding: 3rem;
+  border-radius: 22px;
+  box-shadow: 0 40px 100px rgba(0,0,0,0.08);
+}
+
+.auth-card h2 {
+  font-family: "Playfair Display", serif;
+  font-size: 2.2rem;
+  margin-bottom: 1.8rem;
+  text-align: center;
+}
+
+.form-group {
+  margin-bottom: 1.3rem;
+}
+
+.form-group label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #64748b;
+  margin-bottom: 0.4rem;
+  display: block;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  font-size: 0.95rem;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #020617;
+}
+
+/* BOOTSTRAP VALIDATION LOOK (CUSTOM) */
+.was-validated input:invalid {
+  border-color: #dc2626;
+}
+
+.was-validated input:valid {
+  border-color: #16a34a;
+}
+
+.invalid-feedback {
+  font-size: 0.75rem;
+  color: #dc2626;
+  margin-top: 0.25rem;
+}
+
+.auth-btn {
+  width: 100%;
+  margin-top: 1.5rem;
+  padding: 0.9rem;
+  border-radius: 999px;
+  border: none;
+  background: #020617;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.auth-footer {
+  margin-top: 1.5rem;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.auth-footer a {
+  color: #020617;
+  font-weight: 600;
+  text-decoration: none;
+}
+</style>
+
+<div class="auth-page">
+  <form class="auth-card needs-validation" action="/signup" method="POST" novalidate>
+    <h2>Create Account</h2>
+
+    <div class="form-group">
+      <label>Name</label>
+      <input
+        type="text"
+        name="name"
+        required
+        minlength="2"
+      />
+      <div class="invalid-feedback">
+        Name must be at least 2 characters
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Username</label>
+      <input
+        type="text"
+        name="username"
+        required
+        minlength="3"
+      />
+      <div class="invalid-feedback">
+        Username must be at least 3 characters
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Email</label>
+      <input
+        type="email"
+        name="email"
+        required
+      />
+      <div class="invalid-feedback">
+        Enter a valid email address
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Password</label>
+      <input
+        type="password"
+        name="password"
+        required
+        minlength="6"
+      />
+      <div class="invalid-feedback">
+        Password must be at least 6 characters
+      </div>
+    </div>
+
+    <button class="auth-btn">Sign Up</button>
+
+    <div class="auth-footer">
+      Already have an account?
+      <a href="/login">Login</a>
+    </div>
+  </form>
+</div>
+

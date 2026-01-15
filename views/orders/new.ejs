@@ -1,0 +1,208 @@
+<% layout("layouts/boilerplate") %>
+
+<style>
+.order-page {
+  min-height: 100vh;
+  padding: 6rem 8%;
+  background: linear-gradient(180deg, #ffffff 0%, #f7f7f7 100%);
+  display: flex;
+  justify-content: center;
+}
+
+.order-card {
+  width: 100%;
+  max-width: 860px;
+  background: #ffffff;
+  border-radius: 28px;
+  padding: 4rem;
+  box-shadow: 0 40px 80px rgba(0,0,0,0.06);
+}
+
+.order-header h1 {
+  font-family: "Playfair Display", serif;
+  font-size: 2.6rem;
+  margin-bottom: 0.6rem;
+}
+
+.order-header p {
+  color: #64748b;
+  font-size: 1.05rem;
+  max-width: 600px;
+}
+
+.order-section {
+  margin-top: 3.5rem;
+}
+
+.order-section h3 {
+  font-size: 1.35rem;
+  margin-bottom: 1.2rem;
+}
+
+.order-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.4rem;
+}
+
+.order-field {
+  display: flex;
+  flex-direction: column;
+}
+
+.order-field label {
+  font-size: 0.9rem;
+  color: #475569;
+  margin-bottom: 0.4rem;
+}
+
+.order-field input,
+.order-field textarea {
+  padding: 0.9rem 1rem;
+  border-radius: 14px;
+  border: 1px solid #e5e7eb;
+  font-size: 1rem;
+}
+
+.order-field textarea {
+  min-height: 140px;
+  resize: vertical;
+}
+
+.order-field input:focus,
+.order-field textarea:focus {
+  outline: none;
+  border-color: #020617;
+}
+
+.full {
+  grid-column: 1 / -1;
+}
+
+.order-submit {
+  margin-top: 4rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.order-note {
+  color: #64748b;
+  font-size: 0.9rem;
+  max-width: 420px;
+}
+
+.btn-submit {
+  padding: 1.1rem 3rem;
+  border-radius: 999px;
+  background: #020617;
+  color: #fff;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+@media (max-width: 700px) {
+  .order-card {
+    padding: 2.5rem 1.8rem;
+  }
+  .order-grid {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+
+<div class="order-page">
+  <div class="order-card reveal">
+
+    <!-- HEADER -->
+    <div class="order-header">
+      <h1><%= service.title %></h1>
+      <p>
+        Tell us a little about you and what you want to build.
+        No signup required — we’ll handle everything.
+      </p>
+    </div>
+
+    <!-- FORM -->
+    <form method="POST">
+
+      <!-- USER DETAILS -->
+      <div class="order-section">
+        <h3>Your details</h3>
+
+        <div class="order-grid">
+
+          <% if (!currentUser) { %>
+            <div class="order-field">
+              <label>Name</label>
+              <input name="name" required placeholder="Your full name" />
+            </div>
+
+            <div class="order-field">
+              <label>Email</label>
+              <input
+                name="email"
+                type="email"
+                required
+                placeholder="Email address"
+              />
+            </div>
+          <% } %>
+
+          <!-- PHONE (ALWAYS REQUIRED) -->
+          <div class="order-field full">
+            <label>Phone</label>
+            <input
+              name="phone"
+              required
+              value="<%= currentUser?.phone || '' %>"
+              placeholder="Phone / WhatsApp number"
+            />
+          </div>
+
+        </div>
+      </div>
+
+      <!-- PROJECT DETAILS -->
+      <div class="order-section">
+        <h3>Project details</h3>
+
+        <div class="order-grid">
+          <div class="order-field full">
+            <label>What do you want us to build?</label>
+            <textarea
+              name="requirements"
+              required
+              placeholder="Describe your idea, goals, features, or any reference you have..."
+            ></textarea>
+          </div>
+
+          <div class="order-field">
+            <label>Estimated budget (optional)</label>
+            <input name="budget" placeholder="₹ e.g. 25,000" />
+          </div>
+
+          <div class="order-field">
+            <label>Timeline (optional)</label>
+            <input name="timeline" placeholder="e.g. 2–4 weeks" />
+          </div>
+        </div>
+      </div>
+
+      <!-- SUBMIT -->
+      <div class="order-submit">
+        <p class="order-note">
+          After submitting, we’ll review your request and contact you shortly.
+        </p>
+
+        <button class="btn-submit">
+          Place order →
+        </button>
+      </div>
+
+    </form>
+
+  </div>
+</div>

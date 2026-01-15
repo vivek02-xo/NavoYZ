@@ -1,0 +1,214 @@
+<% layout("layouts/boilerplate") %>
+
+<style>
+/* ===== ADMIN USERS PAGE ===== */
+.admin-users {
+  padding: 8rem 8%;
+  min-height: 100vh;
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+}
+
+/* HEADER */
+.admin-users-header {
+  margin-bottom: 3.5rem;
+}
+
+.admin-users-header h1 {
+  font-family: "Playfair Display", serif;
+  font-size: 2.6rem;
+  margin-bottom: .4rem;
+}
+
+.admin-users-header p {
+  color: #64748b;
+  font-size: 1rem;
+}
+
+/* LIST */
+.user-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+}
+
+/* CARD */
+.user-card {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 1.6rem 2rem;
+  box-shadow: 0 20px 60px rgba(0,0,0,.08);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: transform .3s ease, box-shadow .3s ease;
+}
+
+.user-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 30px 90px rgba(0,0,0,.12);
+}
+
+/* LEFT */
+.user-left {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+.user-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.user-info strong {
+  font-size: 1.05rem;
+}
+
+.user-info p {
+  font-size: .9rem;
+  color: #64748b;
+}
+
+.user-role {
+  margin-top: .2rem;
+  font-size: .75rem;
+  padding: .2rem .6rem;
+  border-radius: 999px;
+  display: inline-block;
+}
+
+.role-user {
+  background: #e5e7eb;
+  color: #020617;
+}
+
+.role-admin {
+  background: #020617;
+  color: #ffffff;
+}
+
+/* RIGHT */
+.user-actions {
+  display: flex;
+  align-items: center;
+  gap: .8rem;
+}
+
+.user-actions select {
+  padding: .35rem .7rem;
+  border-radius: 999px;
+}
+
+.user-actions button {
+  padding: .35rem 1rem;
+  border-radius: 999px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-save {
+  background: #020617;
+  color: #fff;
+}
+
+.btn-delete {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+/* PROTECTED */
+.user-protected {
+  font-size: .85rem;
+  color: #64748b;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .user-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.2rem;
+  }
+
+  .user-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+}
+</style>
+
+<div class="admin-users">
+
+  <!-- HEADER -->
+  <div class="admin-users-header">
+    <h1>Users</h1>
+    <p>Manage users, roles, and access permissions</p>
+  </div>
+
+  <!-- USER LIST -->
+  <div class="user-list">
+
+    <% users.forEach(user => { %>
+      <div class="user-card">
+
+        <!-- LEFT -->
+        <div class="user-left">
+          <img
+            src="<%= user.profileImage?.url || '/src/pfp.jpg' %>"
+            class="user-avatar"
+          />
+
+          <div class="user-info">
+            <strong><%= user.name %></strong>
+            <p><%= user.email %></p>
+
+            <span class="user-role <%= user.role === 'admin' ? 'role-admin' : 'role-user' %>">
+              <%= user.role %>
+            </span>
+          </div>
+        </div>
+
+        <!-- RIGHT -->
+        <% if (!currentUser._id.equals(user._id)) { %>
+
+          <div class="user-actions">
+
+            <!-- ROLE CHANGE -->
+            <form
+              action="/admin/users/<%= user._id %>/role"
+              method="POST"
+              style="display:flex; gap:.5rem;"
+            >
+              <select name="role">
+                <option value="user" <%= user.role === 'user' ? 'selected' : '' %>>User</option>
+                <option value="admin" <%= user.role === 'admin' ? 'selected' : '' %>>Admin</option>
+              </select>
+
+              <button class="btn-save">Save</button>
+            </form>
+
+            <!-- DELETE -->
+            <% if (user.role !== 'admin') { %>
+              <form
+                action="/admin/users/<%= user._id %>?_method=DELETE"
+                method="POST"
+                onsubmit="return confirm('Delete this user permanently?')"
+              >
+                <button class="btn-delete">Delete</button>
+              </form>
+            <% } %>
+
+          </div>
+
+        <% } else { %>
+          <div class="user-protected">(You)</div>
+        <% } %>
+
+      </div>
+    <% }) %>
+
+  </div>
+</div>

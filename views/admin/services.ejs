@@ -1,0 +1,216 @@
+<% layout("layouts/boilerplate") %>
+
+<style>
+/* ===== ADMIN SERVICES ===== */
+.admin-services {
+  padding: 8rem 8%;
+  min-height: 100vh;
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+}
+
+/* HEADER */
+.admin-services-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 3.5rem;
+}
+
+.admin-services-header h1 {
+  font-family: "Playfair Display", serif;
+  font-size: 2.6rem;
+}
+
+.admin-services-header p {
+  color: #64748b;
+  font-size: 1rem;
+}
+
+.btn-new {
+  background: #020617;
+  color: #fff;
+  padding: .6rem 1.4rem;
+  border-radius: 999px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+
+.btn-new:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 15px 40px rgba(2,6,23,.25);
+}
+
+/* LIST */
+.service-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+}
+
+/* CARD */
+.service-card {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 1.8rem 2rem;
+  box-shadow: 0 20px 60px rgba(0,0,0,.08);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 2rem;
+  transition: transform .3s ease, box-shadow .3s ease;
+}
+
+.service-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 30px 90px rgba(0,0,0,.12);
+}
+
+/* INFO */
+.service-info h3 {
+  font-size: 1.25rem;
+  margin-bottom: .3rem;
+}
+
+.service-info p {
+  font-size: .95rem;
+  color: #64748b;
+  line-height: 1.6;
+  margin-bottom: .8rem;
+}
+
+.service-meta {
+  display: flex;
+  gap: .8rem;
+  font-size: .8rem;
+}
+
+.badge {
+  padding: .2rem .7rem;
+  border-radius: 999px;
+  font-weight: 600;
+}
+
+.badge-category {
+  background: #e5e7eb;
+  color: #020617;
+}
+
+.badge-popular {
+  background: linear-gradient(90deg,#6366f1,#ec4899);
+  color: #fff;
+}
+
+/* ACTIONS */
+.service-actions {
+  display: flex;
+  align-items: center;
+  gap: .8rem;
+}
+
+.service-actions a {
+  text-decoration: none;
+  font-weight: 600;
+  font-size: .9rem;
+}
+
+.btn-edit {
+  background: #020617;
+  color: #fff;
+  padding: .35rem 1.2rem;
+  border-radius: 999px;
+}
+
+.btn-delete {
+  background: #fee2e2;
+  color: #991b1b;
+  padding: .35rem 1.2rem;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+}
+
+/* EMPTY STATE */
+.empty-state {
+  text-align: center;
+  margin-top: 6rem;
+  color: #64748b;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .service-card {
+    grid-template-columns: 1fr;
+  }
+
+  .service-actions {
+    justify-content: flex-end;
+  }
+}
+</style>
+
+<div class="admin-services">
+
+  <!-- HEADER -->
+  <div class="admin-services-header">
+    <div>
+      <h1>Services</h1>
+      <p>Manage all services visible to users</p>
+    </div>
+
+    <a href="/admin/services/new" class="btn-new">+ New Service</a>
+  </div>
+
+  <!-- LIST -->
+  <% if (services.length) { %>
+    <div class="service-list">
+
+      <% services.forEach(service => { %>
+        <div class="service-card">
+
+          <!-- INFO -->
+          <div class="service-info">
+            <h3><%= service.title %></h3>
+
+            <p>
+              <%= service.shortDescription || service.description || "No description provided." %>
+            </p>
+
+            <div class="service-meta">
+              <span class="badge badge-category"><%= service.category %></span>
+
+              <% if (service.isPopular) { %>
+                <span class="badge badge-popular">Popular</span>
+              <% } %>
+            </div>
+          </div>
+
+          <!-- ACTIONS -->
+          <div class="service-actions">
+            <a href="/admin/services/<%= service._id %>/edit" class="btn-edit">
+              Edit
+            </a>
+
+            <form
+              action="/admin/services/<%= service._id %>?_method=DELETE"
+              method="POST"
+              onsubmit="return confirm('Delete this service permanently?')"
+            >
+              <button class="btn-delete">Delete</button>
+            </form>
+          </div>
+
+        </div>
+      <% }) %>
+
+    </div>
+  <% } else { %>
+
+    <!-- EMPTY -->
+    <div class="empty-state">
+      <h2>No services yet</h2>
+      <p>Create your first service to get started.</p>
+    </div>
+
+  <% } %>
+
+</div>

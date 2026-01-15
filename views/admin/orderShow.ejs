@@ -1,0 +1,41 @@
+<% layout("layouts/boilerplate") %>
+
+<h1>Order Details</h1>
+
+<p><b>Service:</b> <%= order.service.title %></p>
+<p><b>User:</b> <%= order.user.name %> (<%= order.user.email %>)</p>
+<p><b>Phone:</b> <%= order.customer.phone %></p>
+
+<hr />
+
+<h3>Project</h3>
+<p><%= order.requirements %></p>
+
+<h3>Status</h3>
+<form method="POST" action="/admin/orders/<%= order._id %>?_method=PUT">
+  <select name="status">
+    <% ["pending","in-progress","delivered","cancelled"].forEach(s => { %>
+      <option value="<%= s %>" <%= order.status === s ? "selected" : "" %>>
+        <%= s %>
+      </option>
+    <% }) %>
+  </select>
+
+  <select name="paymentStatus">
+    <option value="unpaid">Unpaid</option>
+    <option value="paid" <%= order.paymentStatus === "paid" ? "selected" : "" %>>
+      Paid
+    </option>
+  </select>
+
+  <textarea name="adminNotes" placeholder="Admin notes"><%= order.adminNotes %></textarea>
+
+  <button>Update</button>
+</form>
+
+<h3>Status Timeline</h3>
+<ul>
+  <% order.statusHistory.forEach(s => { %>
+    <li><%= s.status %> — <%= s.changedAt.toDateString() %></li>
+  <% }) %>
+</ul>

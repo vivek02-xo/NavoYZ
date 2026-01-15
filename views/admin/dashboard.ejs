@@ -1,0 +1,215 @@
+<% layout("layouts/boilerplate") %>
+
+<style>
+/* ===== ADMIN DASHBOARD ===== */
+.admin-dashboard {
+  padding: 8rem 8%;
+  min-height: 100vh;
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+}
+
+/* HEADER */
+.admin-header {
+  margin-bottom: 4rem;
+}
+
+.admin-header h1 {
+  font-family: "Playfair Display", serif;
+  font-size: 2.8rem;
+  margin-bottom: 0.5rem;
+}
+
+.admin-header p {
+  color: #64748b;
+  font-size: 1.05rem;
+}
+
+/* GRID */
+.admin-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 2.2rem;
+}
+
+/* CARD */
+.admin-card {
+  background: #ffffff;
+  padding: 2.4rem;
+  border-radius: 22px;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.08);
+  transition: transform .35s ease, box-shadow .35s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.admin-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    120deg,
+    rgba(99,102,241,0.08),
+    rgba(236,72,153,0.08),
+    rgba(14,165,233,0.08)
+  );
+  opacity: 0;
+  transition: opacity .4s ease;
+}
+
+.admin-card:hover::before {
+  opacity: 1;
+}
+
+.admin-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 45px 120px rgba(0,0,0,0.12);
+}
+
+/* CONTENT */
+.admin-card h3 {
+  font-size: 1.4rem;
+  margin-bottom: .6rem;
+}
+
+.admin-card p {
+  color: #64748b;
+  font-size: .95rem;
+  line-height: 1.6;
+  margin-bottom: 1.6rem;
+}
+
+.admin-card a {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  text-decoration: none;
+  font-weight: 600;
+  color: #020617;
+}
+
+.admin-card a span {
+  font-size: 1.2rem;
+  transition: transform .3s ease;
+}
+
+.admin-card:hover a span {
+  transform: translateX(6px);
+}
+
+/* QUICK ACTIONS */
+.admin-actions {
+  margin-top: 5rem;
+  padding-top: 3rem;
+  border-top: 1px solid rgba(0,0,0,0.08);
+}
+
+.admin-actions h2 {
+  font-family: "Playfair Display", serif;
+  font-size: 2.2rem;
+  margin-bottom: 2rem;
+}
+
+.action-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.8rem;
+}
+
+.action-btn {
+  background: #020617;
+  color: #fff;
+  padding: .9rem 1.6rem;
+  border-radius: 999px;
+  text-decoration: none;
+  font-weight: 600;
+  text-align: center;
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+
+.action-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 20px 50px rgba(2,6,23,0.25);
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .admin-header h1 {
+    font-size: 2.2rem;
+  }
+}
+
+
+/* FULL CARD CLICKABLE */
+.admin-card-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.admin-card-link:visited,
+.admin-card-link:hover {
+  color: inherit;
+}
+
+/* arrow */
+.card-arrow {
+  font-size: 1.2rem;
+  font-weight: 600;
+  transition: transform .3s ease;
+}
+
+.admin-card:hover .card-arrow {
+  transform: translateX(6px);
+}
+
+</style>
+
+<div class="admin-dashboard">
+
+  <!-- HEADER -->
+  <div class="admin-header">
+    <h1>Admin Dashboard</h1>
+    <p>Manage users, services, and platform content</p>
+  </div>
+
+  <!-- MAIN GRID -->
+  <div class="admin-grid">
+
+  <a href="/admin/services" class="admin-card admin-card-link">
+    <h3>Manage Services</h3>
+    <p>Create, update, reorder, or remove services displayed to users.</p>
+    <span class="card-arrow">→</span>
+  </a>
+
+  <a href="/admin/users" class="admin-card admin-card-link">
+    <h3>Users & Roles</h3>
+    <p>View all users, promote admins, or remove inactive accounts.</p>
+    <span class="card-arrow">→</span>
+  </a>
+
+  <!-- <a href="/admin/services/new" class="admin-card admin-card-link">
+    <h3>Create New Service</h3>
+    <p>Add a new service offering with pricing and details.</p>
+    <span class="card-arrow">→</span>
+  </a> -->
+
+  <a href="/profile" class="admin-card admin-card-link">
+    <h3>Your Profile</h3>
+    <p>Update admin profile information and security details.</p>
+    <span class="card-arrow">→</span>
+  </a>
+
+</div>
+
+  <!-- QUICK ACTIONS -->
+  <div class="admin-actions">
+    <h2>Quick Actions</h2>
+
+    <div class="action-grid">
+      <a href="/admin/services/new" class="action-btn">+ New Service</a>
+      <!-- <a href="/admin/users" class="action-btn">Manage Users</a> -->
+      <a href="/services" class="action-btn">View Public Site</a>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,146 @@
+<style>
+.custom-navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 5.2rem;
+  padding: 0 6%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 9999;
+  transition: all 0.35s ease;
+}
+
+/* STATES */
+.navbar-transparent {
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(12px);
+}
+
+.navbar-solid {
+  background: #ffffff;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+
+/* BRAND */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  text-decoration: none;
+  color: #111;
+  font-family: "Playfair Display", serif;
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.brand img {
+  width: 30px;
+  height: 30px;
+}
+
+/* TAGLINE */
+.nav-tagline {
+  font-size: 0.9rem;
+  color: #6b7280;
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+/* ACTIONS */
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 1.4rem;
+}
+
+.nav-link {
+  position: relative;
+  text-decoration: none;
+  color: #111;
+  font-size: 0.95rem;
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 1.5px;
+  background: #111;
+  transition: width 0.25s ease;
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+.nav-btn {
+  padding: 0.5rem 1.2rem;
+  border-radius: 999px;
+  background: #111;
+  color: #fff;
+  font-size: 0.9rem;
+  text-decoration: none;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.nav-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+}
+
+@media (max-width: 900px) {
+  .nav-tagline {
+    display: none;
+  }
+}
+</style>
+
+<nav class="navbar custom-navbar navbar-transparent">
+  <!-- LEFT -->
+  <a class="brand" href="/">
+    <img src="/src/logo.png" alt="NovaYZ" />
+    <span>NovaYZ</span>
+  </a>
+
+  <!-- CENTER -->
+  <div class="nav-tagline">
+    You’ve scrolled into a new chapter of business.
+  </div>
+
+  <!-- RIGHT -->
+  <div class="nav-actions">
+    <% if (!currentUser) { %>
+      <a href="/login" class="nav-link">Login</a>
+      <a href="/signup" class="nav-btn">Signup</a>
+    <% } else { %>
+      <a href="/services" class="nav-link">Services</a>
+      <a href="/orders/my" class="nav-link">My Orders</a>
+
+      <% if (currentUser.role === "admin") { %>
+        <a href="/admin" class="nav-link">Admin</a>
+      <% } %>
+
+      <a href="/profile" class="nav-btn">Profile</a>
+    <% } %>
+  </div>
+</nav>
+
+<script>
+const navbar = document.querySelector(".custom-navbar");
+
+window.addEventListener("scroll", () => {
+  if (window.scrollY > 80) {
+    navbar.classList.add("navbar-solid");
+    navbar.classList.remove("navbar-transparent");
+  } else {
+    navbar.classList.add("navbar-transparent");
+    navbar.classList.remove("navbar-solid");
+  }
+});
+</script>

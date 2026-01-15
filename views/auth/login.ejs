@@ -1,0 +1,169 @@
+<% layout("layouts/boilerplate") %>
+
+<style>
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at top, #ffffff, #f3f4f6);
+  padding: 2rem;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 420px;
+  background: #ffffff;
+  padding: 3rem 2.5rem;
+  border-radius: 18px;
+  box-shadow: 0 40px 80px rgba(0, 0, 0, 0.08);
+  animation: fadeUp 0.7s ease;
+}
+
+.auth-card h1 {
+  font-family: "Playfair Display", serif;
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.auth-card p {
+  color: #6b7280;
+  margin-bottom: 2rem;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.3rem;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-group label {
+  font-size: 0.85rem;
+  margin-bottom: 0.4rem;
+  color: #374151;
+}
+
+.input-group input {
+  padding: 0.75rem 0.9rem;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  outline: none;
+  font-size: 0.95rem;
+  transition: all 0.25s ease;
+}
+
+.input-group input:focus {
+  border-color: #111;
+  box-shadow: 0 0 0 4px rgba(17, 17, 17, 0.08);
+}
+
+/* VALIDATION STATES */
+.was-validated input:invalid {
+  border-color: #dc2626;
+}
+
+.was-validated input:valid {
+  border-color: #16a34a;
+}
+
+.invalid-feedback {
+  font-size: 0.75rem;
+  color: #dc2626;
+  margin-top: 0.25rem;
+}
+
+.auth-btn {
+  margin-top: 1rem;
+  padding: 0.85rem;
+  border-radius: 12px;
+  border: none;
+  background: #111;
+  color: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.auth-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+}
+
+.auth-footer {
+  margin-top: 1.8rem;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.auth-footer a {
+  color: #111;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+</style>
+
+<section class="auth-page">
+  <div class="auth-card">
+    <h1>Welcome back</h1>
+    <p>Login to continue with NovaYZ</p>
+
+    <form
+      action="/login"
+      method="POST"
+      class="auth-form needs-validation"
+      novalidate
+    >
+
+      <div class="input-group">
+        <label>Username</label>
+        <input
+          type="text"
+          name="username"
+          placeholder="your username"
+          required
+          minlength="3"
+        />
+        <div class="invalid-feedback">
+          Username is required
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label>Password</label>
+        <input
+          type="password"
+          name="password"
+          placeholder="••••••••"
+          required
+        />
+        <div class="invalid-feedback">
+          Password is required
+        </div>
+      </div>
+
+      <button class="auth-btn">Login</button>
+    </form>
+
+    <p class="auth-footer">
+      New here?
+      <a href="/signup">Create account</a>
+    </p>
+  </div>
+</section>
+
