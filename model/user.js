@@ -63,13 +63,19 @@ const userSchema = new mongoose.Schema(
       enum: ["user", "admin"],
       default: "user",
     },
+    username: {
+      type: String,
+      required: true,
+      unique: true,
+      trim: true,
+    },
+
   },
+
   { timestamps: true }
 );
 
 // username + password handled by passport-local-mongoose
-userSchema.plugin(passportLocalMongoose, {
-  usernameField: "email",
-});
+userSchema.plugin(passportLocalMongoose);
 
 module.exports = mongoose.model("User", userSchema);
