@@ -18,9 +18,12 @@ const app = express();
 
 /* ===== DATABASE ===== */
 mongoose
-  .connect(process.env.MONGO_URL || "mongodb://127.0.0.1:27017/novayz")
+  .connect(process.env.MONGO_URL, {
+    tls: true,
+    serverSelectionTimeoutMS: 5000,
+  })
   .then(() => console.log("MongoDB connected"))
-  .catch(err => console.error(err));
+  .catch(err => console.error("Mongo error:", err));
 
 /* ===== VIEW ENGINE ===== */
 app.engine("ejs", ejsMate);
