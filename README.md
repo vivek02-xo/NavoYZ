@@ -1,4 +1,5 @@
 # NovaYZ
+Vibe coded platform to sell web services.
 
 Website Link: https://navoyz.onrender.com/
 
